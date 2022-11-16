@@ -12,7 +12,18 @@ async function run() {
     logger,
     telemetryOptions: { tracingFilter: 'INFO' },
   });
+
+  const connection = await NativeConnection.connect(
+    process.env.NODE_ENV === 'production'
+      ? {
+        address: 'production-temporal-hostname',
+      } : {
+        address: 'localhost'
+      }
+  );
   const worker = await Worker.create({
+    connection,
+    namespace: 'default',
     workflowBundle: process.env.NODE_ENV === 'production'
       ? {
         codePath: './workflow-bundle.js',
