@@ -1,0 +1,41 @@
+{
+  "root": "apps/temporal-worker",
+  "sourceRoot": "apps/temporal-worker/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/workspace:run-commands",
+      "dependsOn": [],
+      "options": {
+        "parallel": false,
+        "commands": [
+          {
+            "command": "rm -rf dist/tsc-out"
+          },
+          {
+            "command": "tsc --build -f ./apps/temporal-worker/tsconfig.app.json --pretty && tsc-alias -p ./apps/temporal-worker/tsconfig.app.json"
+          },
+          {
+            "command": "node apps/temporal-worker/bundle-workflow.js"
+          }
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/temporal-worker/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/temporal-worker"],
+      "options": {
+        "jestConfig": "apps/temporal-worker/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}
