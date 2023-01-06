@@ -1,4 +1,4 @@
-import { Connection, WorkflowClient, WorkflowStartOptions } from '@temporalio/client';
+import { Connection, WorkflowClient } from '@temporalio/client';
 
 async function run() {
   const connection = await Connection.connect({

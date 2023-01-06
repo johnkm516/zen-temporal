@@ -10,10 +10,12 @@
   },
   "private": true,
   "dependencies": {
+    "@apollo/client": "^3.7.3",
     "@temporalio/client": "^1.5.2",
     "@temporalio/worker": "^1.5.2",
     "@temporalio/workflow": "^1.5.2",
-    "@apollo/client": "^3.7.3",
+    "node-ts-cache": "^4.4.0",
+    "node-ts-cache-storage-memory": "^4.4.0",
     "tslib": "^2.4.1"
   },
   "devDependencies": {
