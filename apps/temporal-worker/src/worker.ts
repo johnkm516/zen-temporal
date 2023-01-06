@@ -13,12 +13,13 @@ async function run() {
     telemetryOptions: { tracingFilter: 'INFO' },
   });
 
+  console.log("NODE ENV : " + process.env.NODE_ENV);
   const connection = await NativeConnection.connect(
     process.env.NODE_ENV === 'production'
       ? {
         address: 'production-temporal-hostname',
       } : {
-        address: 'localhost'
+        address: 'localhost:7233'
       }
   );
   const worker = await Worker.create({

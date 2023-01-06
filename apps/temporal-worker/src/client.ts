@@ -1,9 +1,8 @@
-import { Connection, WorkflowClient } from '@temporalio/client';
+import { Connection, WorkflowClient, WorkflowStartOptions } from '@temporalio/client';
 
 async function run() {
   const connection = await Connection.connect({
-    address: 'localhost',
-    tls: {}
+    address: 'localhost:7233'
   });
 
   const client = new WorkflowClient({
@@ -11,13 +10,19 @@ async function run() {
     namespace: 'default',
   });
 
+
   const handle = await client.execute('example', {
     args: ['Temporal'],
     taskQueue: 'tutorial',
-    workflowId: 'my-business-id-5',
+    workflowId: 'helloWorld',
+    searchAttributes: {
+      CustomStringField: [
+        'au1052 helloWorld 091823 123456',
+      ],
+    },
   });
 
-  console.log(`Started workflow ${handle.workflowId}`);
+  console.log(`Started workflow ${handle}`);
 }
 
 run().catch((err) => {

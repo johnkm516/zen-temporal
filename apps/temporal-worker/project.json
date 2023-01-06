@@ -8,10 +8,8 @@
       "dependsOn": [],
       "options": {
         "parallel": false,
+        "main": "dist/out-tsc/apps/temporal-worker/src/main.js",
         "commands": [
-          {
-            "command": "rm -rf dist/tsc-out"
-          },
           {
             "command": "tsc --build -f ./apps/temporal-worker/tsconfig.app.json --pretty && tsc-alias -p ./apps/temporal-worker/tsconfig.app.json"
           },
@@ -19,6 +17,12 @@
             "command": "node apps/temporal-worker/bundle-workflow.js"
           }
         ]
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/node:node",
+      "options": {
+        "buildTarget": "temporal-worker:build"
       }
     },
     "lint": {
