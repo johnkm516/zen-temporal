@@ -1,21 +1,17 @@
-import { ApolloLink } from '@apollo/client'
-import { inMemoryCache } from '../inMemoryCache';
+import { setContext } from "@apollo/client/link/context";
+import { onError } from "@apollo/client/link/error";
+import { inMemoryCache } from "../inMemoryCache";
 
-type Headers = {
-  Authorization?: string
-}
+// cached storage for the user token
+let token: string;
+const withToken = setContext(() => {
+  // if you have a cached value, return it immediately
+  if (token) return { token };
 
-const authLink = new ApolloLink((operation, forward) => {
-  const accessToken = inMemoryCache.getItem<string>("accessToken").then();
+  return inMemoryCache.getItem<string>("accessToken").then(userToken => {
+    token = userToken;
+    return { token };
+  });
+});
 
-  operation.setContext(({ headers }: { headers: Headers }) => ({
-    headers: {
-      ...headers,
-      Authorization: "Bearer " + accessToken,
-    },
-  }))
-
-  return forward(operation)
-})
-
-export default authLink
+export const authFlowLink = withToken;

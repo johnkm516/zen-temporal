@@ -11,8 +11,8 @@ async function run() {
   });
 
 
-  const handle = await client.execute('example', {
-    args: ['Temporal'],
+  const handle = await client.execute('graphQLWorkflow', {
+    //args: ['Temporal'],
     taskQueue: 'tutorial',
     workflowId: 'helloWorld',
     searchAttributes: {

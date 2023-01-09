@@ -16,7 +16,9 @@
     "@temporalio/workflow": "^1.5.2",
     "node-ts-cache": "^4.4.0",
     "node-ts-cache-storage-memory": "^4.4.0",
-    "tslib": "^2.4.1"
+    "react": "^18.2.0",
+    "tslib": "^2.4.1",
+    "winston": "^3.8.2"
   },
   "devDependencies": {
     "@nrwl/cli": "15.4.4",
