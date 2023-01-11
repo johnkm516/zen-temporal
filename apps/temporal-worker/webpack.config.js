@@ -28,7 +28,6 @@ module.exports = async (config, context) => {
   console.log("Executing webpack config");
   return await merge(config, {
     plugins: [
-  
       new RunPromiseWebpackPlugin(bundleWorkflow),
     ]
   });

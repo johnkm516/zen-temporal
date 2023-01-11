@@ -6,6 +6,39 @@ const { greeting } = proxyActivities<ITemporalActivities>({
   startToCloseTimeout: '1 minute',
 });
 
-export async function example(name: string): Promise<string> {
-  return await greeting(name);
+const { graphQLRequest } = proxyActivities<ITemporalActivities>({
+  startToCloseTimeout: '1 minute',
+});
+
+export async function example(): Promise<string> {
+  return await graphQLRequest(
+    `query Calendar($where: Auth_CalendarsOnUsersWhereInput) {
+      accountInfo {
+        calendars(where: $where) {
+          calendar {
+            calendarEvents {
+              calendarEvent {
+                allDay
+                end
+                id
+                start
+                title
+                url
+              }
+            }
+            calendarType
+          }
+        }
+      }
+    }`.replace(/\s/g, ' '),
+    {
+      where: {
+        calendar: {
+          calendarType: {
+            in: ["Business"]
+          }
+        }
+      }
+    }
+  );
 }

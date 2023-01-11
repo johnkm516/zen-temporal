@@ -12,7 +12,6 @@ export class TemporalClientController {
   async greeting() {
     console.log("starting workflow");
     const handle = await this.temporalClient.start('example', {
-      args: ['Temporal'],
       taskQueue: 'default',
       workflowId: 'wf-id-' + Math.floor(Math.random() * 1000),
     });
