@@ -1,6 +1,0 @@
-{
-  "version": 2,
-  "projects": {
-    "temporal-worker": "apps/temporal-worker"
-  }
-}
