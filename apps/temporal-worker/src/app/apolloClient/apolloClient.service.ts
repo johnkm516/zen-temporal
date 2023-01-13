@@ -35,8 +35,6 @@ export class ApolloClientService extends ApolloClient<NormalizedCacheObject> {
             'Bearer ' + (this.token != '' && this.token ? this.token : ''),
         },
       });
-      console.log('SETTING CONTEXT');
-      //console.log(operation.getContext());
       return forward(operation);
     });
 
@@ -54,25 +52,23 @@ export class ApolloClientService extends ApolloClient<NormalizedCacheObject> {
     };
 
     const headers = {
-      'Content-Type': 'application/json; charset=utf-8',
+      'Content-Type': 'application/json'
     };
     const graphqlQuery = {
-      operationName: 'AuthLogin',
-      query:
-        'query AuthLogin($data: AuthLoginInput!) { authLogin(data: $data) { token } }',
-      variables: {
-        data: {
-          password: configService.API_PASSWORD,
-          rememberMe: true,
-          username: configService.API_USERNAME,
-        },
-      },
+      "operationName": "AuthLogin",
+      "query": "query AuthLogin($data: AuthLoginInput!) { authLogin(data: $data) { token } }",
+      "variables": {
+        "data": {
+          "password": configService.API_PASSWORD,
+          "rememberMe": true,
+          "username": configService.API_USERNAME,
+        }
+      }
     };
 
     const httpRequestOptions = {
-      method: 'POST',
       headers: headers,
-      body: graphqlQuery,
+      body: JSON.stringify(graphqlQuery),
     };
 
     const getNewToken = async () => {
@@ -82,35 +78,29 @@ export class ApolloClientService extends ApolloClient<NormalizedCacheObject> {
         },
       } = await lastValueFrom(
         this.httpService
-          .post(configService.API_URL, undefined, httpRequestOptions)
+          .post(configService.API_URL, graphqlQuery, httpRequestOptions)
           .pipe(
             map((response) => {
-              console.log('REQUEST RESPONSE' + response);
-              return response;
+              return response.data;
             })
           )
       );
-      console.log('REFRESHIHNG TOKEN');
       this.token = accessToken;
-      console.log(this.token);
     };
 
     const errorLink = onError(({ graphQLErrors, operation, forward }) => {
       if (graphQLErrors) {
         for (const err of graphQLErrors) {
-          console.log('PRINTING ERROR' + err.message);
           switch (err?.message) {
             case 'Unauthorized':
               if (!this.isRefreshing) {
                 this.isRefreshing = true;
 
                 return fromPromise(
-                  getNewToken().catch((error) => {
+                  getNewToken().catch((error) => {   
                     resolvePendingRequests();
                     this.isRefreshing = false;
-                    this.token = '';
-                    console.log('INSIDE GETNEWTOKEN CATCH');
-                    console.log(error);
+                    this.token = '';  
                     return forward(operation);
                   })
                 ).flatMap(() => {
@@ -136,7 +126,7 @@ export class ApolloClientService extends ApolloClient<NormalizedCacheObject> {
     const cache = new InMemoryCache();
 
     const options: ApolloClientOptions<NormalizedCacheObject> = {
-      link: from([authLink, errorLink, httpLink]),
+      link: from([errorLink, authLink, httpLink]),
       cache,
       credentials: 'include',
       defaultOptions: {
