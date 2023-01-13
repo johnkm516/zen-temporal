@@ -52,23 +52,23 @@ export class ApolloClientService extends ApolloClient<NormalizedCacheObject> {
     };
 
     const headers = {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     };
     const graphqlQuery = {
-      "operationName": "AuthLogin",
-      "query": "query AuthLogin($data: AuthLoginInput!) { authLogin(data: $data) { token } }",
-      "variables": {
-        "data": {
-          "password": configService.API_PASSWORD,
-          "rememberMe": true,
-          "username": configService.API_USERNAME,
-        }
-      }
+      operationName: 'AuthLogin',
+      query:
+        'query AuthLogin($data: AuthLoginInput!) { authLogin(data: $data) { token } }',
+      variables: {
+        data: {
+          password: configService.API_PASSWORD,
+          rememberMe: true,
+          username: configService.API_USERNAME,
+        },
+      },
     };
 
     const httpRequestOptions = {
       headers: headers,
-      body: JSON.stringify(graphqlQuery),
     };
 
     const getNewToken = async () => {
@@ -97,10 +97,10 @@ export class ApolloClientService extends ApolloClient<NormalizedCacheObject> {
                 this.isRefreshing = true;
 
                 return fromPromise(
-                  getNewToken().catch((error) => {   
+                  getNewToken().catch((error) => {
                     resolvePendingRequests();
                     this.isRefreshing = false;
-                    this.token = '';  
+                    this.token = '';
                     return forward(operation);
                   })
                 ).flatMap(() => {
