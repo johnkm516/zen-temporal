@@ -15,7 +15,6 @@ import { onError } from '@apollo/client/link/error';
 import { HttpService } from '@nestjs/axios';
 import { lastValueFrom } from 'rxjs/internal/lastValueFrom';
 import { map } from 'rxjs/internal/operators/map';
-import { Console } from 'console';
 
 @Injectable()
 export class ApolloClientService extends ApolloClient<NormalizedCacheObject> {

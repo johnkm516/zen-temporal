@@ -10,11 +10,9 @@ export class TemporalClientController {
 
   @Get()
   async greeting() {
-    console.log("starting workflow");
-    const handle = await this.temporalClient.start('example', {
+    const handle = await this.temporalClient.start('mailTest', {
       taskQueue: 'default',
-      workflowId: 'wf-id-' + Math.floor(Math.random() * 1000),
+      workflowId: 'wf-id-SENDEMAIL' + Math.floor(Math.random() * 1000),
     });
-    console.log(`Started workflow ${handle.workflowId}`);
   }
 }
