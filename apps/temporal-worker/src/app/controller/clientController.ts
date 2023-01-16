@@ -17,8 +17,8 @@ export class SubscriptionsController {
     });
   }
 
-  @Get('subscribe:email')
-  async subscribe(@Param('email') email: string) {
+  @Get('subscribe/:email')
+  async subscribe(@Param('email') email) {
     const Customer = {
       FirstName: 'john',
       LastName: 'kim',
@@ -38,8 +38,8 @@ export class SubscriptionsController {
     });
   }
 
-  @Get('subscribe/cancel:email')
-  async subscriptionCancel(@Param('email') email: string) {
+  @Get('subscribe/cancel/:email')
+  async subscriptionCancel(@Param('email') email) {
     const Customer = {
       FirstName: 'john',
       LastName: 'kim',
