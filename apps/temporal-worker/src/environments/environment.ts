@@ -17,8 +17,8 @@ export const environment: EnvironmentBase = {
         user: process.env.SMTP_LOGIN,
         pass: process.env.SMTP_PASSWORD,
       },
-      logger: true,
-      debug: true, 
+      //logger: true,
+      //debug: true, 
     },
     defaults: {
       from: `"${process.env.SMTP_FROM_NAME}" <${process.env.SMTP_FROM_EMAIL}>`,
