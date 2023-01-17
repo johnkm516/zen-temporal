@@ -15,7 +15,7 @@ class RunPromiseWebpackPlugin {
 
 async function bundleWorkflow() {
   const { code } = await bundleWorkflowCode({
-    workflowsPath: require.resolve('./src/app/workflows/workflows.ts'),
+    workflowsPath: require.resolve('./src/app/workflows.ts'),
   });
   await writeFile(
     './dist/apps/temporal-worker/workflow-bundle.js',

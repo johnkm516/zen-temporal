@@ -1,6 +1,7 @@
 import * as wf from '@temporalio/workflow'; 
+import { WorkflowState } from '../types/WorkflowState';
 
-export function useState<T = any>(name: string, initialValue: T) {
+export function useState<T = any>(name: string, initialValue: T): WorkflowState<T> {
     const signal = wf.defineSignal<[T]>(name);
     const query = wf.defineQuery<T>(name);
     let state: T = initialValue;

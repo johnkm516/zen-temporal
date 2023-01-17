@@ -1,7 +1,6 @@
 import { Controller, Get, Param, Post } from '@nestjs/common';
-import { Connection, WorkflowClient } from '@temporalio/client';
+import { WorkflowClient } from '@temporalio/client';
 import { InjectTemporalClient } from 'nestjs-temporal';
-import { cancelSubscription } from '../workflows/workflows'
 
 @Controller('subscriptions')
 export class SubscriptionsController {
@@ -54,7 +53,7 @@ export class SubscriptionsController {
     };
     try {
       const handle = this.temporalClient.getHandle('wf-id-SUBSCRIPTION_' + email);
-      await handle.signal(cancelSubscription);
+      await handle.signal("cancelSubscription");
     } catch (err: any) {
       if (err.details) console.error(err.details);
       else console.error(err);
