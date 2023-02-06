@@ -20,7 +20,7 @@ export default class SubscriptionActivities extends ActivitiesService {
       footerHeader: 'Generic Footer',
       footerBody: 'I have no body',
     };
-    await this.mailService.sendGeneral({
+    return await this.mailService.sendGeneral({
       to: email,
       subject: '[Temporal] Welcome to your new subscription!',
       context: mailContext,
@@ -40,7 +40,7 @@ export default class SubscriptionActivities extends ActivitiesService {
       footerHeader: 'Generic Footer',
       footerBody: 'I have no body',
     };
-    await this.mailService.sendGeneral({
+    return await this.mailService.sendGeneral({
       to: email,
       subject: '[Temporal] Your subscription has been cancelled',
       context: mailContext,
@@ -62,15 +62,13 @@ export default class SubscriptionActivities extends ActivitiesService {
       footerHeader: 'Generic Footer',
       footerBody: 'I have no body',
     };
-    await this.mailService.sendGeneral({
+    return await this.mailService.sendGeneral({
       to: email,
       subject: '[Temporal] Your subscription has been cancelled',
       context: mailContext,
     });
 
-    console.log(
-      'ALERT: CUSTOMER CANCELLED ACTIVE SUBSCRIPTION! SPAM CALLS TO CUSTOMER WITH NEW SUBSCRIPTION OFFERS'
-    );
+
   }
 
   @Activity()
@@ -86,15 +84,12 @@ export default class SubscriptionActivities extends ActivitiesService {
       footerHeader: 'Generic Footer',
       footerBody: 'I have no body',
     };
-    await this.mailService.sendGeneral({
+    return await this.mailService.sendGeneral({
       to: email,
       subject: '[Temporal] Your subscription has expired!',
       context: mailContext,
     });
 
-    console.log(
-      'ALERT: CUSTOMER CANCELLED ACTIVE SUBSCRIPTION! SPAM CALLS TO CUSTOMER WITH NEW SUBSCRIPTION OFFERS'
-    );
   }
 
   @Activity()
@@ -121,7 +116,7 @@ export default class SubscriptionActivities extends ActivitiesService {
       footerHeader: 'Generic Footer',
       footerBody: 'I have no body',
     };
-    await this.mailService.sendGeneral({
+    return await this.mailService.sendGeneral({
       to: _customer.Email,
       subject: '[Temporal] Your monthly subscription invoice.',
       context: mailContext,
